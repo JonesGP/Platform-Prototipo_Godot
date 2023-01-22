@@ -1,0 +1,155 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://sprites/circles.png" type="Texture" id=1]
+[ext_resource path="res://sprites/bg.png" type="Texture" id=2]
+[ext_resource path="res://sprites/logo.png" type="Texture" id=3]
+[ext_resource path="res://fonts/THEBOLDFONT 2022.otf" type="DynamicFontData" id=4]
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Node
+
+
+func _ready():
+	pass
+func _process(delta):
+	if Input.is_action_pressed(\"ui_accept\"):
+		get_tree().change_scene(\"res://scenes/main_game.tscn\")
+"
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("circle2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -720 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "trans"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 720 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("circle2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -720 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 60
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "fade_text"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:custom_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="main_menu" type="Node"]
+script = SubResource( 6 )
+
+[node name="sprites" type="Node2D" parent="."]
+
+[node name="bg" type="Sprite" parent="sprites"]
+texture = ExtResource( 2 )
+centered = false
+
+[node name="circle" type="Sprite" parent="sprites"]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="circle2" type="Sprite" parent="sprites"]
+position = Vector2( 0, -720 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="logo" type="Sprite" parent="sprites"]
+position = Vector2( 640, 200 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sprites"]
+autoplay = "trans"
+anims/RESET = SubResource( 1 )
+anims/trans = SubResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+margin_left = 3.0
+margin_top = 428.0
+margin_right = 1279.0
+margin_bottom = 488.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Press enter to play"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
+autoplay = "fade_text"
+anims/RESET = SubResource( 4 )
+anims/fade_text = SubResource( 5 )

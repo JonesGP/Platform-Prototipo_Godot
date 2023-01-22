@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/star.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 27, 27 )
+
+[node name="stars" type="Node2D"]
+position = Vector2( 417, 266 )
+
+[node name="star" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="star"]
+shape = SubResource( 1 )
+
+[node name="sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
